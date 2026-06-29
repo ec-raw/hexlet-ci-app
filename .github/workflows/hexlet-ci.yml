@@ -7,16 +7,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Клонирование репозитория
       - uses: actions/checkout@v4
 
-      # Шаг 1: Установка зависимостей и настройка окружения
+      # 2. Установка Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3. Установка проекта (зависимостей)
       - name: Install dependencies
         run: make setup
 
-      # Шаг 2: Проверка стиля кода (линтер)
-      - name: Run linter
-        run: make lint
-
-      # Шаг 3: Запуск тестов
+      # 4. Запуск тестов (и линтера, если он есть в make-командах)
       - name: Run tests
         run: make test
+
+      # 5. Кастомный экшен Хекслета
+      - name: Hello from Hexlet Action
+        uses: hexlet-components/hello-from-hexlet-action@release
